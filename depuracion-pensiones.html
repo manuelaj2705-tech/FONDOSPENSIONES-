@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DepuraPensión — Especialistas en Depuración de Estados de Cuenta</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: #FDF6E3;
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E45;
+    --navy-light: #243B55;
+    --white: #FAFAF8;
+    --gray: #6B7C8D;
+    --green: #2D7D46;
+    --green-light: #E8F5EC;
+    --red-soft: #B03A2E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(13,27,42,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: -0.01em;
+  }
+  .nav-logo span { color: var(--white); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(250,250,248,0.7); text-decoration: none;
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 80% at 10% 80%, rgba(45,125,70,0.06) 0%, transparent 60%),
+                linear-gradient(160deg, #0D1B2A 0%, #1A2E45 60%, #0D1B2A 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light);
+    padding: 0.4rem 1rem;
+    border-radius: 2px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero p {
+    font-size: 1.15rem; line-height: 1.7;
+    color: rgba(250,250,248,0.65);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.9rem 2.2rem;
+    border-radius: 2px;
+    font-weight: 700; font-size: 0.95rem; letter-spacing: 0.04em;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,0.35); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 0.9rem 2.2rem;
+    border-radius: 2px;
+    font-weight: 500; font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid rgba(250,250,248,0.25);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1.2rem;
+    z-index: 1;
+    opacity: 0; animation: fadeLeft 0.9s 1s forwards;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 1.4rem 1.8rem;
+    border-radius: 4px;
+    text-align: right;
+    min-width: 200px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .stat-card:hover { transform: translateX(-4px); border-color: rgba(201,168,76,0.5); }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: rgba(250,250,248,0.5); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(250,250,248,0.3); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    z-index: 1;
+    animation: bounce 2s infinite;
+  }
+  .scroll-arrow { width: 20px; height: 20px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); }
+
+  /* ─── PROBLEMA / SOLUCIÓN ─── */
+  .section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700; line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: center; max-width: 1200px; margin: 0 auto;
+  }
+  .problem-list { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+  .problem-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.2rem 1.4rem;
+    background: rgba(176,58,46,0.08);
+    border: 1px solid rgba(176,58,46,0.2);
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  .problem-item:hover { border-color: rgba(176,58,46,0.5); }
+  .problem-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .problem-text strong { display: block; font-size: 0.92rem; font-weight: 600; margin-bottom: 0.25rem; color: #e88; }
+  .problem-text p { font-size: 0.83rem; color: rgba(250,250,248,0.5); line-height: 1.5; }
+
+  .solution-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(45,125,70,0.08) 100%);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 6px; padding: 2.5rem;
+  }
+  .solution-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; margin-bottom: 1.5rem;
+    color: var(--gold-light);
+  }
+  .solution-steps { display: flex; flex-direction: column; gap: 1.2rem; }
+  .step {
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--gold); color: var(--navy);
+    font-weight: 700; font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text strong { display: block; font-size: 0.92rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .step-text p { font-size: 0.82rem; color: rgba(250,250,248,0.55); line-height: 1.5; }
+
+  /* ─── CALCULADORA ─── */
+  .calc-section {
+    background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy) 100%);
+    padding: 7rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .calc-section::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .calc-wrapper { max-width: 900px; margin: 0 auto; }
+  .calc-intro { text-align: center; margin-bottom: 3.5rem; }
+  .calc-intro .section-title { margin-bottom: 0.8rem; }
+  .calc-intro p { color: rgba(250,250,248,0.55); font-size: 1rem; }
+
+  .calculator {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px; padding: 3rem;
+    backdrop-filter: blur(10px);
+  }
+  .calc-input-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: end;
+    margin-bottom: 2.5rem;
+  }
+  .input-group label {
+    display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+  }
+  .input-with-prefix {
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px; overflow: hidden;
+    transition: border-color 0.25s;
+  }
+  .input-with-prefix:focus-within { border-color: var(--gold); }
+  .input-prefix {
+    padding: 0 1rem; font-weight: 700; color: var(--gold);
+    background: rgba(201,168,76,0.1);
+    font-size: 1rem; align-self: stretch;
+    display: flex; align-items: center;
+    border-right: 1px solid rgba(201,168,76,0.2);
+  }
+  .input-with-prefix input {
+    flex: 1; padding: 0.9rem 1rem;
+    background: transparent; border: none; outline: none;
+    color: var(--white); font-size: 1.1rem; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .input-with-prefix input::placeholder { color: rgba(250,250,248,0.2); }
+  .calc-btn {
+    padding: 0.9rem 2rem;
+    background: var(--gold); color: var(--navy);
+    border: none; border-radius: 4px;
+    font-weight: 700; font-size: 1rem;
+    cursor: pointer; white-space: nowrap;
+    transition: all 0.25s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .calc-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,0.3); }
+
+  .slider-section { margin-bottom: 2.5rem; }
+  .slider-section label {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem;
+  }
+  .slider-section label span { color: var(--white); font-family: 'Playfair Display', serif; font-size: 1rem; }
+  input[type=range] {
+    width: 100%; height: 4px; appearance: none;
+    background: rgba(201,168,76,0.2); border-radius: 4px; outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    appearance: none; width: 18px; height: 18px;
+    background: var(--gold); border-radius: 50%; cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.25);
+    transition: box-shadow 0.2s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { box-shadow: 0 0 0 6px rgba(201,168,76,0.2); }
+
+  .result-box {
+    background: linear-gradient(135deg, rgba(45,125,70,0.15) 0%, rgba(201,168,76,0.08) 100%);
+    border: 1px solid rgba(45,125,70,0.4);
+    border-radius: 6px; padding: 2rem 2.5rem;
+    display: none;
+    animation: fadeUp 0.5s forwards;
+  }
+  .result-box.visible { display: block; }
+  .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
+  .result-item { text-align: center; }
+  .result-item .r-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(250,250,248,0.4); margin-bottom: 0.4rem; }
+  .result-item .r-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+  }
+  .r-value.gold { color: var(--gold); }
+  .r-value.green { color: #5ecf7e; }
+  .r-value.white { color: var(--white); }
+  .result-note {
+    font-size: 0.78rem; color: rgba(250,250,248,0.4);
+    text-align: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;
+    font-style: italic;
+  }
+
+  /* Tabla de tarifas */
+  .tariff-table-wrap { overflow-x: auto; margin-top: 3rem; }
+  .tariff-table {
+    width: 100%; border-collapse: separate; border-spacing: 0;
+    font-size: 0.9rem;
+  }
+  .tariff-table thead th {
+    background: rgba(201,168,76,0.15);
+    padding: 1rem 1.5rem; text-align: left;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--gold); font-weight: 600;
+    border-bottom: 1px solid rgba(201,168,76,0.25);
+  }
+  .tariff-table tbody tr {
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .tariff-table tbody tr:hover { background: rgba(201,168,76,0.05); }
+  .tariff-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(250,250,248,0.8);
+  }
+  .tariff-table td:last-child { font-weight: 700; color: var(--gold-light); }
+  .tariff-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 2px;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  }
+  .badge-popular { background: rgba(201,168,76,0.2); color: var(--gold); border: 1px solid rgba(201,168,76,0.4); }
+  .badge-premium { background: rgba(45,125,70,0.2); color: #6dde8f; border: 1px solid rgba(45,125,70,0.4); }
+  .highlight-row { background: rgba(201,168,76,0.04) !important; }
+
+  /* ─── SERVICIOS ─── */
+  .services-section {
+    padding: 7rem 4rem;
+    background: var(--navy-mid);
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 1100px; margin: 3rem auto 0;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px; padding: 2rem;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .service-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-4px); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    font-size: 2rem; margin-bottom: 1.2rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 4px;
+  }
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    margin-bottom: 0.7rem; color: var(--white);
+  }
+  .service-card p { font-size: 0.85rem; color: rgba(250,250,248,0.5); line-height: 1.65; }
+
+  /* ─── PROCESO ─── */
+  .process-section { padding: 7rem 4rem; }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; max-width: 1100px; margin: 3.5rem auto 0;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 30px; left: 10%; right: 10%;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+    opacity: 0.3;
+  }
+  .proc-step { text-align: center; padding: 0 1.5rem; position: relative; }
+  .proc-num {
+    width: 60px; height: 60px; border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--gold);
+    background: var(--navy);
+    position: relative; z-index: 1;
+    transition: all 0.3s;
+  }
+  .proc-step:hover .proc-num { background: var(--gold); color: var(--navy); box-shadow: 0 0 28px rgba(201,168,76,0.4); }
+  .proc-step h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .proc-step p { font-size: 0.82rem; color: rgba(250,250,248,0.5); line-height: 1.6; }
+
+  /* ─── TESTIMONIOS ─── */
+  .testimonials { padding: 7rem 4rem; background: var(--navy-mid); }
+  .test-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 1100px; margin: 3rem auto 0;
+  }
+  .test-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px; padding: 2rem;
+    transition: border-color 0.3s;
+  }
+  .test-card:hover { border-color: rgba(201,168,76,0.25); }
+  .test-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+  .test-quote { font-size: 0.9rem; line-height: 1.7; color: rgba(250,250,248,0.65); font-style: italic; margin-bottom: 1.5rem; }
+  .test-author { display: flex; align-items: center; gap: 0.8rem; }
+  .test-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; color: var(--navy);
+  }
+  .test-name { font-size: 0.85rem; font-weight: 600; }
+  .test-role { font-size: 0.75rem; color: rgba(250,250,248,0.4); }
+
+  /* ─── FAQ ─── */
+  .faq-section { padding: 7rem 4rem; max-width: 800px; margin: 0 auto; }
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+  }
+  .faq-question {
+    width: 100%; background: none; border: none; text-align: left;
+    padding: 1.5rem 0; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 500; color: var(--white);
+    transition: color 0.2s;
+  }
+  .faq-question:hover { color: var(--gold); }
+  .faq-arrow { font-size: 1.2rem; color: var(--gold); transition: transform 0.3s; flex-shrink: 0; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.88rem; color: rgba(250,250,248,0.55); line-height: 1.75;
+  }
+  .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.5rem; }
+
+  /* ─── CTA FINAL ─── */
+  .cta-section {
+    padding: 8rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900; margin-bottom: 1rem;
+    position: relative; z-index: 1;
+  }
+  .cta-section h2 em { font-style: normal; color: var(--gold); }
+  .cta-section p {
+    color: rgba(250,250,248,0.55); font-size: 1.05rem;
+    max-width: 500px; margin: 0 auto 2.5rem;
+    position: relative; z-index: 1;
+  }
+  .cta-form {
+    display: flex; gap: 0.8rem; max-width: 480px; margin: 0 auto;
+    position: relative; z-index: 1;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .cta-input {
+    flex: 1; min-width: 220px; padding: 0.9rem 1.3rem;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px; outline: none; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    transition: border-color 0.25s;
+  }
+  .cta-input:focus { border-color: var(--gold); }
+  .cta-input::placeholder { color: rgba(250,250,248,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080F18;
+    padding: 3rem 4rem;
+    border-top: 1px solid rgba(201,168,76,0.12);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; color: var(--gold);
+  }
+  .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .footer-links a { color: rgba(250,250,248,0.35); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-size: 0.78rem; color: rgba(250,250,248,0.2); }
+
+  /* ─── ANIMACIONES ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Floating elements */
+  .float-gold {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    animation: floatAround 12s ease-in-out infinite;
+  }
+  @keyframes floatAround {
+    0%, 100% { transform: translate(0,0); }
+    33% { transform: translate(20px,-15px); }
+    66% { transform: translate(-10px,20px); }
+  }
+
+  /* Tooltip */
+  .tooltip-wrap { position: relative; display: inline-block; }
+  .tooltip-icon { color: var(--gold); cursor: help; font-size: 0.9rem; margin-left: 4px; }
+  .tooltip-box {
+    position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: var(--navy-light); border: 1px solid rgba(201,168,76,0.3);
+    color: rgba(250,250,248,0.8); font-size: 0.75rem; line-height: 1.5;
+    padding: 0.6rem 0.9rem; border-radius: 4px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    z-index: 10;
+  }
+  .tooltip-wrap:hover .tooltip-box { opacity: 1; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 4rem; }
+    .hero-stats { display: none; }
+    .section, .calc-section, .services-section, .process-section, .testimonials, .cta-section { padding: 4rem 1.5rem; }
+    .problem-grid, .services-grid, .test-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-steps::before { display: none; }
+    .result-grid { grid-template-columns: 1fr; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+    .faq-section { padding: 4rem 1.5rem; }
+    .calc-input-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Depura<span>Pensión</span></div>
+  <ul class="nav-links">
+    <li><a href="#problema">El Problema</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#tarifas">Tarifas</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contacto" class="nav-cta">Consulta Gratis</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="float-gold" style="top:10%;right:15%;"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Especialistas en Pensiones · Colombia</div>
+    <h1>Recupera lo que es <em>tuyo.</em><br>Depuramos tu estado<br>de cuenta pensional.</h1>
+    <p>Miles de colombianos tienen inconsistencias, semanas sin registrar o dineros mal liquidados en sus estados pensionales. Nosotros los encontramos y los corregimos.</p>
+    <div class="hero-btns">
+      <a href="#calculadora" class="btn-primary">Calcular mi caso →</a>
+      <a href="#proceso" class="btn-secondary">¿Cómo funciona?</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">+2.400</div>
+      <div class="stat-label">Casos depurados</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Tasa de éxito</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$38M</div>
+      <div class="stat-label">Recuperados en 2024</div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Descubrir</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- PROBLEMA & SOLUCIÓN -->
+<section class="section" id="problema" style="background:var(--navy-mid);">
+  <div class="problem-grid">
+    <div class="reveal">
+      <div class="section-label">¿Por qué necesitas esto?</div>
+      <h2 class="section-title">Errores en tu historial pensional que te cuestan dinero</h2>
+      <p style="color:rgba(250,250,248,0.5);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem;">Los fondos de pensiones y el sistema PILA tienen fallas frecuentes que pasan desapercibidas. Cada error puede representar semanas de cotización perdidas.</p>
+      <div class="problem-list">
+        <div class="problem-item">
+          <div class="problem-icon">⚠️</div>
+          <div class="problem-text">
+            <strong>Semanas no reportadas</strong>
+            <p>Empleadores que pagaron pero el fondo no las acreditó correctamente.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">🔴</div>
+          <div class="problem-text">
+            <strong>IBC mal liquidado</strong>
+            <p>Ingreso Base de Cotización diferente al salario real devengado.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">📋</div>
+          <div class="problem-text">
+            <strong>Traslados de fondo sin acreditación</strong>
+            <p>Semanas perdidas al cambiar entre fondos privados o al RPM.</p>
+          </div>
+        </div>
+        <div class="problem-item">
+          <div class="problem-icon">💰</div>
+          <div class="problem-text">
+            <strong>Bonos pensionales sin aplicar</strong>
+            <p>Tiempos laborados en el sector público no incorporados al historial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:0.2s;">
+      <div class="solution-box">
+        <h3>Nuestra solución</h3>
+        <div class="solution-steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <strong>Diagnóstico completo</strong>
+              <p>Revisamos cada línea de tu estado de cuenta pensional contra las planillas PILA y nóminas.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <strong>Identificación de inconsistencias</strong>
+              <p>Detectamos semanas faltantes, montos incorrectos y periodos sin reportar.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <strong>Gestión y reclamación</strong>
+              <p>Gestionamos directamente ante el fondo, la UGPP o el empleador la corrección.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <strong>Estado depurado y certificado</strong>
+              <p>Recibes tu historial corregido listo para tramitar tu pensión.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section class="services-section" id="servicios">
+  <div style="text-align:center;max-width:600px;margin:0 auto;" class="reveal">
+    <div class="section-label">¿Qué hacemos?</div>
+    <h2 class="section-title">Servicios de depuración pensional</h2>
+    <p style="color:rgba(250,250,248,0.5);font-size:0.9rem;line-height:1.7;">Cubrimos todos los regímenes: RPM (Colpensiones), RAIS (fondos privados) y regímenes especiales.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3>Depuración de cartera pensional</h3>
+      <p>Revisión exhaustiva de todo el historial de cotizaciones. Cruzamos contra planillas PILA, sistemas de nómina y registros del fondo para detectar cada inconsistencia.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.1s;">
+      <div class="service-icon">🏛️</div>
+      <h3>Gestión ante Colpensiones</h3>
+      <p>Presentamos derechos de petición, recursos y reclamaciones formales ante Colpensiones para corrección de semanas y actualización del IBL.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s;">
+      <div class="service-icon">💼</div>
+      <h3>Fondos privados (RAIS)</h3>
+      <p>Revisión de extractos, aplicación correcta de rendimientos, verificación de traslados y gestión de correcciones ante Protección, Porvenir, Colfondos y Old Mutual.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.3s;">
+      <div class="service-icon">📑</div>
+      <h3>Bonos pensionales sector público</h3>
+      <p>Verificación y gestión de bonos tipo A y B por tiempos laborados en entidades del Estado. Incluye cálculo actuarial y radicación ante el Ministerio.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.4s;">
+      <div class="service-icon">⚖️</div>
+      <h3>Asesoría y proyección pensional</h3>
+      <p>Simulación de la pensión futura con el historial depurado. Te decimos cuánto y cuándo puedes pensionarte con las semanas reales acreditadas.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.5s;">
+      <div class="service-icon">🛡️</div>
+      <h3>Corrección de IBC y semanas</h3>
+      <p>Identificamos empleadores que reportaron IBC inferior al salario real y gestionamos la reliquidación de aportes con el ajuste de semanas correspondientes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULADORA + TARIFAS -->
+<section class="calc-section" id="calculadora tarifas">
+  <div class="calc-wrapper">
+    <div class="calc-intro reveal">
+      <div class="section-label">Transparencia total</div>
+      <h2 class="section-title" id="tarifas">Calcula tu tarifa en segundos</h2>
+      <p>Nuestros honorarios se calculan sobre el valor depurado o recuperado. Sin letra pequeña.</p>
+    </div>
+
+    <div class="calculator reveal">
+      <div class="calc-input-row">
+        <div class="input-group">
+          <label>
+            Valor total del estado de cartera a depurar
+            <span class="tooltip-wrap">
+              <span class="tooltip-icon">ⓘ</span>
+              <span class="tooltip-box">Suma total de las inconsistencias detectadas o el valor de cotizaciones a corregir</span>
+            </span>
+          </label>
+          <div class="input-with-prefix">
+            <span class="input-prefix">COP $</span>
+            <input type="number" id="valor-input" placeholder="Ej: 25.000.000" min="0" step="100000">
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calcular()">Calcular →</button>
+      </div>
+
+      <div class="slider-section">
+        <label>
+          Desliza para explorar rangos
+          <span id="slider-val">$10.000.000</span>
+        </label>
+        <input type="range" id="valor-slider" min="1000000" max="500000000" step="1000000" value="10000000" oninput="updateSlider(this.value)">
+      </div>
+
+      <div class="result-box" id="result-box">
+        <div class="result-grid">
+          <div class="result-item">
+            <div class="r-label">Valor depurado</div>
+            <div class="r-value white" id="r-valor">—</div>
+          </div>
+          <div class="result-item">
+            <div class="r-label">Porcentaje aplicado</div>
+            <div class="r-value gold" id="r-porcentaje">—</div>
+          </div>
+          <div class="result-item">
+            <div class="r-label">Honorario estimado</div>
+            <div class="r-value green" id="r-honorario">—</div>
+          </div>
+        </div>
+        <p class="result-note" id="r-nota">* El honorario se paga únicamente sobre el valor efectivamente recuperado o depurado. Consulta inicial gratuita.</p>
+      </div>
+
+      <!-- Tabla de tarifas -->
+      <div class="tariff-table-wrap reveal">
+        <table class="tariff-table">
+          <thead>
+            <tr>
+              <th>Rango del valor depurado</th>
+              <th>Porcentaje de cobro</th>
+              <th>Honorario máximo en el rango</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Hasta $5.000.000</td>
+              <td>25%</td>
+              <td>$1.250.000</td>
+              <td></td>
+            </tr>
+            <tr class="highlight-row">
+              <td>$5.000.001 – $20.000.000</td>
+              <td>20%</td>
+              <td>$4.000.000</td>
+              <td><span class="tariff-badge badge-popular">Más común</span></td>
+            </tr>
+            <tr>
+              <td>$20.000.001 – $50.000.000</td>
+              <td>18%</td>
+              <td>$9.000.000</td>
+              <td></td>
+            </tr>
+            <tr class="highlight-row">
+              <td>$50.000.001 – $100.000.000</td>
+              <td>15%</td>
+              <td>$15.000.000</td>
+              <td><span class="tariff-badge badge-premium">Empresarial</span></td>
+            </tr>
+            <tr>
+              <td>Más de $100.000.000</td>
+              <td>12%</td>
+              <td>A convenir</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size:0.78rem;color:rgba(250,250,248,0.3);margin-top:1rem;font-style:italic;">* IVA no incluido. Pago contra resultados — si no recuperamos, no cobramos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section class="process-section" id="proceso">
+  <div style="text-align:center;max-width:600px;margin:0 auto;" class="reveal">
+    <div class="section-label">Sin complicaciones</div>
+    <h2 class="section-title">Así depuramos tu estado de cuenta</h2>
+  </div>
+  <div class="process-steps">
+    <div class="proc-step reveal">
+      <div class="proc-num">01</div>
+      <h4>Consulta gratuita</h4>
+      <p>Revisamos tu caso sin costo. Nos das tus datos y tu estado de cuenta pensional.</p>
+    </div>
+    <div class="proc-step reveal" style="transition-delay:0.15s;">
+      <div class="proc-num">02</div>
+      <h4>Diagnóstico</h4>
+      <p>En 3–5 días hábiles tendrás un informe con todas las inconsistencias encontradas.</p>
+    </div>
+    <div class="proc-step reveal" style="transition-delay:0.3s;">
+      <div class="proc-num">03</div>
+      <h4>Gestión y corrección</h4>
+      <p>Radicamos las reclamaciones ante el fondo o empleador. Te mantenemos informado en todo momento.</p>
+    </div>
+    <div class="proc-step reveal" style="transition-delay:0.45s;">
+      <div class="proc-num">04</div>
+      <h4>Historial depurado</h4>
+      <p>Recibes tu estado de cuenta corregido. Cobro únicamente sobre lo recuperado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonials">
+  <div style="text-align:center;max-width:600px;margin:0 auto;" class="reveal">
+    <div class="section-label">Lo dicen nuestros clientes</div>
+    <h2 class="section-title">Resultados reales</h2>
+  </div>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-quote">"Tenía 4 años de cotizaciones mal acreditadas. Gracias a ellos recuperé 208 semanas que el fondo nunca había registrado. Ahora puedo pensionarme en 2 años."</p>
+      <div class="test-author">
+        <div class="test-avatar">MR</div>
+        <div>
+          <div class="test-name">Martha R.</div>
+          <div class="test-role">Docente retirada, Bogotá</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal" style="transition-delay:0.15s;">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-quote">"Mi empleador reportó mal el IBC durante 6 años. Depurapensión logró la corrección y la reliquidación. Recuperé más de $18 millones en aportes."</p>
+      <div class="test-author">
+        <div class="test-avatar">JC</div>
+        <div>
+          <div class="test-name">Jorge C.</div>
+          <div class="test-role">Ingeniero, Medellín</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card reveal" style="transition-delay:0.3s;">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-quote">"Después de dos traslados de fondo me faltaban semanas. El equipo manejó todo, desde las derechos de petición hasta la resolución final. Excelente servicio."</p>
+      <div class="test-author">
+        <div class="test-avatar">LP</div>
+        <div>
+          <div class="test-name">Lucía P.</div>
+          <div class="test-role">Contadora, Cali</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div style="text-align:center;margin-bottom:3rem;" class="reveal">
+    <div class="section-label">Preguntas frecuentes</div>
+    <h2 class="section-title">Todo lo que necesitas saber</h2>
+  </div>
+
+  <div class="faq-item reveal">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      ¿Cuánto tiempo tarda el proceso de depuración?
+      <span class="faq-arrow">▾</span>
+    </button>
+    <div class="faq-answer">El diagnóstico inicial toma entre 3 y 5 días hábiles. La gestión completa ante los fondos o empleadores puede tomar entre 30 y 90 días hábiles dependiendo de la complejidad y la entidad. Casos con UGPP o Colpensiones pueden tardar hasta 4 meses.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      ¿Cobran si no recuperan nada?
+      <span class="faq-arrow">▾</span>
+    </button>
+    <div class="faq-answer">No. Nuestro modelo es de honorario de éxito: solo cobramos si logramos la corrección o recuperación efectiva del valor. La consulta inicial y el diagnóstico son completamente gratuitos.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      ¿Qué documentos necesito para iniciar?
+      <span class="faq-arrow">▾</span>
+    </button>
+    <div class="faq-answer">Básicamente tu estado de cuenta pensional (lo puedes descargar de la web de tu fondo), cédula de ciudadanía, y si tienes acceso, los desprendibles de nómina o contratos laborales del periodo con inconsistencias. Nosotros te orientamos en la recolección de documentos.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      ¿Trabajan con Colpensiones y fondos privados?
+      <span class="faq-arrow">▾</span>
+    </button>
+    <div class="faq-answer">Sí. Atendemos casos de Colpensiones (RPM) y todos los fondos privados del RAIS: Protección, Porvenir, Colfondos y Old Mutual. También manejamos regímenes especiales de Fuerzas Militares, Ecopetrol y Magisterio.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      ¿El IVA está incluido en el porcentaje de tarifa?
+      <span class="faq-arrow">▾</span>
+    </button>
+    <div class="faq-answer">No. El porcentaje de honorario es antes de IVA. Al valor de los honorarios se le aplica el IVA del 19% correspondiente. Esto se detalla en el contrato de servicios que firmamos antes de iniciar cualquier gestión.</div>
+  </div>
+
+  <div class="faq-item reveal">
+    <button class="faq-question" onclick="toggleFaq(this)">
+      ¿Puedo hacer seguimiento a mi caso?
+      <span class="faq-arrow">▾</span>
+    </button>
+    <div class="faq-answer">Absolutamente. Cada cliente tiene acceso a actualizaciones periódicas por WhatsApp y correo electrónico. Recibimos todas las notificaciones de las entidades y te informamos en tiempo real cada avance o requerimiento.</div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="contacto">
+  <h2>Tu pensión <em>bien liquidada</em><br>empieza hoy.</h2>
+  <p>Consulta gratuita. Sin compromisos. Solo necesitas tu estado de cuenta pensional.</p>
+  <div class="cta-form">
+    <input type="text" class="cta-input" placeholder="Tu nombre completo" id="nombre-input">
+    <input type="tel" class="cta-input" placeholder="WhatsApp o teléfono" id="tel-input" style="min-width:180px;flex:0.7;">
+    <button class="btn-primary" onclick="enviarConsulta()" style="white-space:nowrap;">Solicitar consulta →</button>
+  </div>
+  <p id="form-msg" style="margin-top:1rem;font-size:0.85rem;color:var(--gold);display:none;">✓ ¡Recibido! Te contactamos en las próximas 2 horas hábiles.</p>
+  <div style="margin-top:3rem;display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;">
+    <div style="text-align:center;">
+      <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(250,250,248,0.35);margin-bottom:0.3rem;">Consulta inicial</div>
+      <div style="font-size:1.1rem;font-weight:600;color:var(--gold);">Gratuita</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(250,250,248,0.35);margin-bottom:0.3rem;">Pago de honorarios</div>
+      <div style="font-size:1.1rem;font-weight:600;color:var(--gold);">Solo contra resultados</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:rgba(250,250,248,0.35);margin-bottom:0.3rem;">Respuesta</div>
+      <div style="font-size:1.1rem;font-weight:600;color:var(--gold);">Mismo día hábil</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DepuraPensión</div>
+  <div class="footer-links">
+    <a href="#inicio">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#tarifas">Tarifas</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <div class="footer-copy">© 2025 DepuraPensión. Todos los derechos reservados.</div>
+</footer>
+
+<script>
+// ── CALCULADORA ──
+function fmt(n) {
+  return '$' + Math.round(n).toLocaleString('es-CO');
+}
+
+function getPorcentaje(val) {
+  if (val <= 5000000) return { pct: 25, label: '25%', nota: 'Tarifa estándar para estados de cartera hasta $5M.' };
+  if (val <= 20000000) return { pct: 20, label: '20%', nota: 'Tarifa más frecuente. Aplica para estados entre $5M y $20M.' };
+  if (val <= 50000000) return { pct: 18, label: '18%', nota: 'Tarifa intermedia para carteras entre $20M y $50M.' };
+  if (val <= 100000000) return { pct: 15, label: '15%', nota: 'Tarifa empresarial para carteras entre $50M y $100M.' };
+  return { pct: 12, label: '12%', nota: 'Tarifa preferencial para carteras superiores a $100M. Sujeta a negociación.' };
+}
+
+function mostrarResultado(val) {
+  const { pct, label, nota } = getPorcentaje(val);
+  const honorario = val * (pct / 100);
+  document.getElementById('r-valor').textContent = fmt(val);
+  document.getElementById('r-porcentaje').textContent = label;
+  document.getElementById('r-honorario').textContent = fmt(honorario);
+  document.getElementById('r-nota').textContent = '* ' + nota + ' Pago únicamente contra resultado efectivo.';
+  const box = document.getElementById('result-box');
+  box.classList.add('visible');
+}
+
+function calcular() {
+  const raw = document.getElementById('valor-input').value.replace(/[^\d]/g, '');
+  const val = parseInt(raw, 10);
+  if (!val || val <= 0) { alert('Ingresa un valor válido'); return; }
+  mostrarResultado(val);
+}
+
+function updateSlider(val) {
+  const n = parseInt(val);
+  const label = n >= 1000000 ? '$' + (n/1000000).toFixed(n%1000000===0?0:1) + 'M' : fmt(n);
+  document.getElementById('slider-val').textContent = label;
+  document.getElementById('valor-input').value = n;
+  mostrarResultado(n);
+}
+
+document.getElementById('valor-input').addEventListener('keydown', e => { if (e.key === 'Enter') calcular(); });
+
+// ── FAQ ──
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── FORM ──
+function enviarConsulta() {
+  const nombre = document.getElementById('nombre-input').value.trim();
+  const tel = document.getElementById('tel-input').value.trim();
+  if (!nombre || !tel) { alert('Por favor completa tu nombre y teléfono.'); return; }
+  document.getElementById('nombre-input').value = '';
+  document.getElementById('tel-input').value = '';
+  const msg = document.getElementById('form-msg');
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display = 'none'; }, 6000);
+}
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── NAV SHADOW ON SCROLL ──
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.style.boxShadow = window.scrollY > 60 ? '0 4px 30px rgba(0,0,0,0.4)' : 'none';
+});
+
+// ── SLIDER INIT ──
+updateSlider(10000000);
+</script>
+</body>
+</html>
